@@ -1,8 +1,9 @@
-<mat-progress-spinner
-  class="spinner"
-  mode="indeterminate"
-  *ngIf="!initFinished; else content">
-</mat-progress-spinner>
+<div class="spinner-container" *ngIf="!initFinished; else content">
+  <mat-progress-spinner
+    mode="indeterminate"
+  color="primary">
+  </mat-progress-spinner>
+</div>
 
 <ng-template #content>
   <div class="container">
@@ -33,7 +34,8 @@
             number
             between 1 and {{allRepos.length}}</mat-hint>
         </mat-form-field>
-        <button mat-raised-button [disabled]="!isValidBestReposN()" color="primary" (click)="filterBestN()">Filter</button>
+        <button mat-raised-button [disabled]="!isValidBestReposN()" color="primary" (click)="filterBestN()">Filter
+        </button>
       </div>
 
       <div class="flex-item">

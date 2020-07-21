@@ -1,17 +1,9 @@
-.container, .spinner {
-  position: absolute;
-}
-
 .container {
+  position: absolute;
   top: 2%;
   left: 5%;
   width: 90%;
   height: 98%;
-}
-
-.spinner {
-  left: 45%;
-  top: 40%;
 }
 
 ::ng-deep .mat-select-panel {
@@ -41,8 +33,8 @@ mat-divider {
   margin-top: 15px;
 }
 
-.mat-button-toggle-label-content{
-  line-height: 0px !important;
+.mat-button-toggle-label-content {
+  line-height: 0 !important;
   padding: 12px 10px 10px 10px !important
 }
 
@@ -52,4 +44,14 @@ mat-form-field {
 
 .text-danger {
   color: red;
+}
+
+.spinner-container {
+  background-color: black;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
 }
