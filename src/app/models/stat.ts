@@ -3,11 +3,11 @@ export interface Stat {
   count: number;
   uniques: number;
   repoName: number;
-  date: number;
+  statDate: string;
 }
 
 export interface StatReduced {
   count: number;
   uniques: number;
-  date: number;
+  statDate: string;
 }

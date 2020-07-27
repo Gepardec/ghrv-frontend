@@ -32,6 +32,7 @@ export class ChartComponent implements OnInit {
 
     this.httpService.findAllGrouped().subscribe(
       data => {
+        console.log(data);
         this.stats = data;
         this.allRepos = Object.keys(this.stats).sort();
 
@@ -57,25 +58,36 @@ export class ChartComponent implements OnInit {
     let min = new Date().getTime();
     let max = 0;
 
+    let dates = this.getDateListBetweenDates(new Date('2020-07-01'), new Date());
+    this.chartLabels = dates;
+
+    for (const key in this.stats) {
+      const statArr: StatReduced[] = this.stats[key];
+      for (const date of dates) {
+        let temp = this.getCleanedISOString(new Date(date));
+        if (!statArr.map(value => value.statDate).includes(temp)) {
+          statArr.push({count: 0, statDate: temp, uniques: 0});
+        }
+      }
+      this.stats[key] = statArr.sort((a, b) => new Date(a.statDate).getTime() - new Date(b.statDate).getTime());
+    }
+
     for (const key of this.selectedRepos) {
       const temp = {
         label: key, data: [], lineTension: 0.2, fill: false
       };
-
       for (const statReduced of this.stats[key]) {
-        temp.data.push({x: new Date(statReduced.date).toDateString(), y: statReduced[this.currentMode]});
-        if (statReduced.date < min) {
-          min = statReduced.date;
-        } else if (statReduced.date > max) {
-          max = statReduced.date;
+
+        temp.data.push({x: new Date(statReduced.statDate).toDateString(), y: statReduced[this.currentMode]});
+        if (statReduced.statDate < min) {
+          min = statReduced.statDate;
+        } else if (statReduced.statDate > max) {
+          max = statReduced.statDate;
         }
       }
       this.chartData.push(temp);
     }
 
-    for (let i = min; i <= max; i += 86400000) {
-      this.chartLabels.push(new Date(i).toString());
-    }
 
     this.initFinished = true;
   }
@@ -138,8 +150,6 @@ export class ChartComponent implements OnInit {
   }
 
   filterBestN(): void {
-    console.log(this.bestReposN);
-
     this.clearVariables();
     this.topStats = new Map([...this.topStats.entries()].sort((pair1, pair2) => pair2[1] - pair1[1]));
     this.selectedRepos = Array.from({length: +this.bestReposN}, function() {
@@ -151,5 +161,25 @@ export class ChartComponent implements OnInit {
 
   isValidBestReposN(): boolean {
     return !(!this.bestReposN || this.bestReposN < 1 || this.bestReposN > this.allRepos.length);
+  }
+
+  getDateListBetweenDates(minDate: Date, maxDate: Date): any {
+    minDate.setHours(0, 0, 0, 0);
+    maxDate.setHours(0, 0, 0, 0);
+
+    const dateRanges: string[] = [];
+
+    for (const currentDate = new Date(minDate); currentDate <= maxDate; currentDate.setDate(currentDate.getDate() + 1)) {
+      dateRanges.push(currentDate.toString());
+      // this.getCleanedISOString(currentDate));
+    }
+
+    return dateRanges;
+  }
+
+  getCleanedISOString(date: Date): string {
+    const tzoffset = date.getTimezoneOffset() * 60000; //offset in milliseconds
+    const localISOTime = new Date(date.getTime() - tzoffset).toISOString();
+    return localISOTime;
   }
 }
