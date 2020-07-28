@@ -1,7 +1,7 @@
 <div class="spinner-container" *ngIf="!initFinished; else content">
   <mat-progress-spinner
     mode="indeterminate"
-  color="primary">
+    color="primary">
   </mat-progress-spinner>
 </div>
 
@@ -34,7 +34,7 @@
             number
             between 1 and {{allRepos.length}}</mat-hint>
         </mat-form-field>
-        <button mat-raised-button [disabled]="!isValidBestReposN()" color="primary" (click)="filterBestN()">Filter
+        <button mat-raised-button [disabled]="!isValidBestReposN()" color="primary" (click)="filterBestNRepos()">Filter
         </button>
       </div>
 
@@ -44,17 +44,38 @@
           <mat-button-toggle value="uniques">Unique views</mat-button-toggle>
         </mat-button-toggle-group>
       </div>
+
+      <div class="flex-item">
+        <mat-form-field>
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input [min]="MIN_DATE" [max]="MAX_DATE" [rangePicker]="picker">
+            <input readonly
+                   [(ngModel)]="fromDate"
+                   matStartDate
+                   placeholder="From date">
+            <input readonly [(ngModel)]="toDate" matEndDate placeholder="To date">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker touchUi #picker></mat-date-range-picker>
+        </mat-form-field>
+      </div>
+      <button mat-raised-button color="primary" (click)="this.loadDataAndInit()">Filter by date</button>
     </div>
 
     <mat-divider></mat-divider>
 
-    <div style="display: block;">
-      <canvas *ngIf="initFinished" baseChart
+    <div *ngIf="groupedStats.size > 0; else alternate_chart">
+      <canvas baseChart
               [datasets]="chartData"
               [labels]="chartLabels"
               [chartType]="'line'"
               [options]="chartOptions"
       ></canvas>
     </div>
+
+    <ng-template #alternate_chart>
+      <p>no data was found</p>
+    </ng-template>
+
   </div>
 </ng-template>
