@@ -8,7 +8,6 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import * as moment from 'moment';
 import {Moment} from 'moment';
-import {MatSnackBar} from '@angular/material/snack-bar';
 
 export const DATE_FORMAT = 'YYYY-MM-DD';
 export const datePickerFormat = {
@@ -52,7 +51,7 @@ export class ChartComponent implements OnInit {
 
   public chartOptions: ChartOptions;
 
-  constructor(private httpService: HttpService, private matSnackBar: MatSnackBar) {
+  constructor(private httpService: HttpService) {
   }
 
   ngOnInit(): void {
@@ -183,6 +182,7 @@ export class ChartComponent implements OnInit {
 
   private initChartOptions(): void {
     this.chartOptions = {
+      maintainAspectRatio: false,
       responsive: true,
       scales: {
         xAxes: [{

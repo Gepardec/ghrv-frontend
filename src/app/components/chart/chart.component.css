@@ -1,45 +1,10 @@
-.container {
-  position: absolute;
-  top: 2%;
-  left: 5%;
-  width: 90%;
-  height: 98%;
-}
-
 ::ng-deep .mat-select-panel {
   max-height: 70vh !important;
-}
-
-.flex {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.flex-item > * {
-  margin-left: 10px;
 }
 
 .logo {
   height: 50px;
   object-fit: contain;
-}
-
-input {
-  width: 500px;
-}
-
-mat-divider {
-  margin-top: 15px;
-}
-
-.mat-button-toggle-label-content {
-  line-height: 0 !important;
-  padding: 12px 10px 10px 10px !important
-}
-
-mat-form-field {
-  width: 500px;
 }
 
 .text-danger {
@@ -54,4 +19,27 @@ mat-form-field {
   position: fixed;
   height: 100vh;
   width: 100vw;
+}
+
+mat-drawer-container {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  bottom: 0;
+}
+
+mat-drawer {
+  background-color: #2D2D2D;
+}
+
+.flex-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.chart-container {
+  height: 95vh;
 }
