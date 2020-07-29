@@ -8,7 +8,6 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import * as moment from 'moment';
 import {Moment} from 'moment';
-import {MatSnackBar} from '@angular/material/snack-bar';
 
 export const DATE_FORMAT = 'YYYY-MM-DD';
 export const datePickerFormat = {
@@ -52,7 +51,7 @@ export class ChartComponent implements OnInit {
 
   public chartOptions: ChartOptions;
 
-  constructor(private httpService: HttpService, private matSnackBar: MatSnackBar) {
+  constructor(private httpService: HttpService) {
   }
 
   ngOnInit(): void {
@@ -66,15 +65,17 @@ export class ChartComponent implements OnInit {
         for (const key of Object.keys(data)) {
           this.groupedStats.set(key, data[key]);
         }
+
         const itemSize = this.groupedStats.size;
         if (itemSize === 0) {
           this.initFinished = true;
           return;
-        } else if (itemSize > 0 && itemSize <= 5) {
+        } else if ((itemSize >= 1 && itemSize <= 5)) {
           this.bestReposN = itemSize;
-        } else if (!this.bestReposN) {
+        } else if (itemSize > 5 || !this.bestReposN) {
           this.bestReposN = 5;
         }
+
         this.allRepos = Array.from(this.groupedStats.keys()).sort();
         this.fillTopStats();
         this.initChartOptions();
@@ -183,6 +184,7 @@ export class ChartComponent implements OnInit {
 
   private initChartOptions(): void {
     this.chartOptions = {
+      maintainAspectRatio: false,
       responsive: true,
       scales: {
         xAxes: [{
@@ -206,6 +208,10 @@ export class ChartComponent implements OnInit {
         }]
       },
     };
+  }
+
+  shouldShowFilterCards(): boolean {
+    return this.groupedStats && this.groupedStats.size > 0;
   }
 
 }

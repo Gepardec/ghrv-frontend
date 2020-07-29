@@ -1,45 +1,10 @@
-.container {
-  position: absolute;
-  top: 2%;
-  left: 5%;
-  width: 90%;
-  height: 98%;
-}
-
 ::ng-deep .mat-select-panel {
   max-height: 70vh !important;
-}
-
-.flex {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.flex-item > * {
-  margin-left: 10px;
 }
 
 .logo {
   height: 50px;
   object-fit: contain;
-}
-
-input {
-  width: 500px;
-}
-
-mat-divider {
-  margin-top: 15px;
-}
-
-.mat-button-toggle-label-content {
-  line-height: 0 !important;
-  padding: 12px 10px 10px 10px !important
-}
-
-mat-form-field {
-  width: 500px;
 }
 
 .text-danger {
@@ -55,3 +20,73 @@ mat-form-field {
   height: 100vh;
   width: 100vw;
 }
+
+mat-drawer-container {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  bottom: 0;
+}
+
+mat-drawer {
+  background-color: #2D2D2D;
+  width: 350px;
+}
+
+.flex-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px 10px;
+}
+
+.close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: indianred;
+  color: white;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.menu-button {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+
+.chart-container {
+  margin-left: 30px;
+  height: 100vh;
+}
+
+mat-card {
+  width: 85%;
+}
+
+button:not(.close-button):not(.menu-button), mat-form-field, mat-button-toggle-group, mat-button-toggle {
+  width: 100%;
+}
+
+mat-card {
+  margin-top: 20px;
+}
+
+button:not(.close-button):not(.menu-button) {
+  margin-top: 10px;
+}
+
+.no-data-text {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
