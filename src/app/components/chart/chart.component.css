@@ -30,16 +30,63 @@ mat-drawer-container {
 
 mat-drawer {
   background-color: #2D2D2D;
+  width: 350px;
 }
 
 .flex-container {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 10px;
+  padding: 20px 10px;
+}
+
+.close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: indianred;
+  color: white;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.menu-button {
+  position: absolute;
+  top: 5px;
+  left: 5px;
 }
 
 .chart-container {
-  height: 95vh;
+  margin-left: 30px;
+  height: 100vh;
 }
+
+mat-card {
+  width: 85%;
+}
+
+button:not(.close-button):not(.menu-button), mat-form-field, mat-button-toggle-group, mat-button-toggle {
+  width: 100%;
+}
+
+mat-card {
+  margin-top: 20px;
+}
+
+button:not(.close-button):not(.menu-button) {
+  margin-top: 10px;
+}
+
+.no-data-text {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
