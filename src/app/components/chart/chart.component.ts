@@ -76,12 +76,8 @@ export class ChartComponent implements OnInit {
           return;
         } else if (itemSize >= 1 && itemSize <= 5) {
           this.bestReposN = itemSize;
-          console.warn('BestReposN was reset to ', this.bestReposN, ' due to itemSize = ', itemSize, '!');
         } else if (itemSize > 15 || !this.bestReposN) {
           this.bestReposN = this.bestReposN = this.storageService.readTopNReposFromLocalStorage();
-          console.warn('BestReposN was reset to ', this.bestReposN, ' due to itemSize = ', itemSize, '!');
-        } else {
-
         }
 
         this.allRepos = Array.from(this.groupedStats.keys()).sort();

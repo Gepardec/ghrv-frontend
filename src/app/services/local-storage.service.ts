@@ -1,5 +1,4 @@
-import {Inject, Injectable} from '@angular/core';
-import {LOCAL_STORAGE, StorageService} from 'ngx-webstorage-service';
+import {Injectable} from '@angular/core';
 
 const STORAGE_KEY_MODE = 'local_mode';
 const STORAGE_KEY_SELECTED_REPOS = 'local_selected_repos';
@@ -10,11 +9,8 @@ const STORAGE_KEY_TOP_N_REPOS = 'local_top_n_repos';
 })
 export class LocalStorageService {
 
-  constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {
-  }
-
   public storeModeOnLocalStorage(mode: string): void {
-    this.storage.set(STORAGE_KEY_MODE, mode);
+    localStorage.setItem(STORAGE_KEY_MODE, mode);
   }
 
   public storeSelectedReposOnLocalStorage(selectedRepos: string[]): void {
@@ -22,22 +18,22 @@ export class LocalStorageService {
     for (const repo of selectedRepos) {
       currentSelectedRepos.push(repo);
     }
-    this.storage.set(STORAGE_KEY_SELECTED_REPOS, currentSelectedRepos);
+    localStorage.setItem(STORAGE_KEY_SELECTED_REPOS, JSON.stringify(currentSelectedRepos));
   }
 
   public storeTopNReposOnLocalStorage(topNRepos: number): void {
-    this.storage.set(STORAGE_KEY_TOP_N_REPOS, topNRepos);
+    localStorage.setItem(STORAGE_KEY_TOP_N_REPOS, topNRepos.toString());
   }
 
   public readModeFromLocalStorage(): string {
-    return this.storage.get(STORAGE_KEY_MODE);
+    return localStorage.getItem(STORAGE_KEY_MODE);
   }
 
   public readSelectedReposFromLocalStorage(): string[] {
-    return this.storage.get(STORAGE_KEY_SELECTED_REPOS);
+    return JSON.parse(localStorage.getItem(STORAGE_KEY_SELECTED_REPOS));
   }
 
   public readTopNReposFromLocalStorage(): number {
-    return this.storage.get(STORAGE_KEY_TOP_N_REPOS);
+    return +localStorage.getItem(STORAGE_KEY_TOP_N_REPOS);
   }
 }
