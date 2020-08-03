@@ -1,20 +1,20 @@
-<div class="spinner-container" *ngIf="!initFinished; else content">
+<div *ngIf="!initFinished; else content" class="spinner-container">
   <mat-progress-spinner
-    mode="indeterminate"
-    color="primary">
+    color="primary"
+    mode="indeterminate">
   </mat-progress-spinner>
 </div>
 
 <ng-template #content>
   <mat-drawer-container [hasBackdrop]="false">
-    <mat-drawer [opened]="true" #drawer mode="side">
+    <mat-drawer #drawer [opened]="true" mode="side">
       <div class="flex-container">
-        <button class="close-button" (click)="drawer.toggle()">&times;</button>
+        <button (click)="drawer.toggle()" class="close-button">&times;</button>
 
         <img class="logo" src="assets/logo.png">
 
         <mat-card *ngIf="shouldShowFilterCards()">
-          <mat-button-toggle-group name="view" [(ngModel)]="currentMode" (change)="onCurrentModeChange()">
+          <mat-button-toggle-group (change)="onCurrentModeChange()" [(ngModel)]="currentMode" name="view">
             <mat-button-toggle value="count">Total views</mat-button-toggle>
             <mat-button-toggle value="uniques">Unique views</mat-button-toggle>
           </mat-button-toggle-group>
@@ -28,15 +28,15 @@
             </mat-select>
           </mat-form-field>
 
-          <button mat-raised-button
+          <button (click)="onSelectAllClicked()"
                   color="primary"
-                  (click)="onSelectAllClicked()">
+                  mat-raised-button>
             Select all
           </button>
 
-          <button mat-raised-button
+          <button (click)="onDeselectAllClicked()"
                   color="primary"
-                  (click)="onDeselectAllClicked()">
+                  mat-raised-button>
             Deselect all
           </button>
         </mat-card>
@@ -44,13 +44,16 @@
         <mat-card *ngIf="shouldShowFilterCards()">
           <mat-form-field>
             <mat-label>Top n repos</mat-label>
-            <input [(ngModel)]="bestReposN" min="1" [max]="allRepos.length" matInput>
-            <mat-hint class="text-danger" *ngIf="!isValidBestReposN()">Enter a
+            <input [(ngModel)]="bestReposN" [max]="allRepos.length" matInput min="1">
+            <mat-hint *ngIf="!isValidBestReposN()" class="text-danger">Enter a
               number
               between 1 and {{allRepos.length}}</mat-hint>
           </mat-form-field>
 
-          <button mat-raised-button [disabled]="!isValidBestReposN()" color="primary" (click)="filterBestNRepos()">
+          <span *ngIf="selectedRepos.length !== +bestReposN"
+                class="warning-filter">Filter is currently not applied!</span>
+
+          <button (click)="filterBestNRepos()" [disabled]="!isValidBestReposN()" color="primary" mat-raised-button>
             Filter
           </button>
         </mat-card>
@@ -59,32 +62,36 @@
         <mat-card>
           <mat-form-field>
             <mat-label>Enter a date range</mat-label>
-            <mat-date-range-input [min]="MIN_DATE" [max]="MAX_DATE" [rangePicker]="picker">
-              <input readonly
-                     [(ngModel)]="fromDate"
+            <mat-date-range-input [max]="MAX_DATE" [min]="MIN_DATE" [rangePicker]="picker">
+              <input [(ngModel)]="fromDate"
                      matStartDate
-                     placeholder="From date">
-              <input readonly [(ngModel)]="toDate" matEndDate placeholder="To date">
+                     placeholder="From date"
+                     readonly>
+              <input [(ngModel)]="toDate" matEndDate placeholder="To date" readonly>
             </mat-date-range-input>
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-date-range-picker touchUi #picker></mat-date-range-picker>
+            <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
+            <mat-date-range-picker #picker touchUi></mat-date-range-picker>
           </mat-form-field>
 
-          <button mat-raised-button color="primary" (click)="this.loadDataAndInit()">Filter</button>
+          <button (click)="this.loadDataAndInit()" color="primary" mat-raised-button>Filter</button>
+        </mat-card>
+
+        <mat-card>
+          <button (click)="this.restoreDefaults()" color="primary" mat-raised-button>Restore defaults</button>
         </mat-card>
       </div>
     </mat-drawer>
 
     <mat-drawer-content>
-      <button class="menu-button" *ngIf="!drawer.opened" color="primary" mat-mini-fab (click)="drawer.toggle()">
+      <button (click)="drawer.toggle()" *ngIf="!drawer.opened" class="menu-button" color="primary" mat-mini-fab>
         <mat-icon>menu</mat-icon>
       </button>
-      <div class="chart-container" *ngIf="groupedStats.size > 0; else no_data_text">
-        <canvas baseChart
+      <div *ngIf="groupedStats.size > 0; else no_data_text" class="chart-container">
+        <canvas [chartType]="'line'"
                 [datasets]="chartData"
                 [labels]="chartLabels"
-                [chartType]="'line'"
                 [options]="chartOptions"
+                baseChart
         ></canvas>
       </div>
       <ng-template #no_data_text>

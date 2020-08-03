@@ -8,8 +8,10 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import * as moment from 'moment';
 import {Moment} from 'moment';
+import {LocalStorageService} from '../../services/local-storage.service';
 
 export const DATE_FORMAT = 'YYYY-MM-DD';
+// noinspection SpellCheckingInspection
 export const datePickerFormat = {
   parse: {
     dateInput: 'input',
@@ -40,7 +42,7 @@ export class ChartComponent implements OnInit {
   allRepos: string[] = [];
   selectedRepos: string[] = [];
   currentMode = 'count';
-  bestReposN;
+  bestReposN: number;
   toDate: Moment = moment().subtract(1, 'day');
   fromDate: Moment = this.toDate.clone().subtract(1, 'month');
 
@@ -48,13 +50,15 @@ export class ChartComponent implements OnInit {
   MAX_DATE: Moment = moment().subtract(1, 'day');
 
   initFinished = false;
+  initiallyLoaded = false;
 
   public chartOptions: ChartOptions;
 
-  constructor(private httpService: HttpService) {
+  constructor(private httpService: HttpService, private storageService: LocalStorageService) {
   }
 
   ngOnInit(): void {
+    this.currentMode = this.storageService.readModeFromLocalStorage();
     this.loadDataAndInit();
   }
 
@@ -70,21 +74,31 @@ export class ChartComponent implements OnInit {
         if (itemSize === 0) {
           this.initFinished = true;
           return;
-        } else if ((itemSize >= 1 && itemSize <= 5)) {
+        } else if (itemSize >= 1 && itemSize <= 5) {
           this.bestReposN = itemSize;
-        } else if (itemSize > 5 || !this.bestReposN) {
-          this.bestReposN = 5;
+          console.warn('BestReposN was reset to ', this.bestReposN, ' due to itemSize = ', itemSize, '!');
+        } else if (itemSize > 15 || !this.bestReposN) {
+          this.bestReposN = this.bestReposN = this.storageService.readTopNReposFromLocalStorage();
+          console.warn('BestReposN was reset to ', this.bestReposN, ' due to itemSize = ', itemSize, '!');
+        } else {
+
         }
 
         this.allRepos = Array.from(this.groupedStats.keys()).sort();
         this.fillTopStats();
         this.initChartOptions();
         this.filterBestNRepos();
+        this.initiallyLoaded = true;
       },
       error => {
         console.error(error);
       }
     );
+  }
+
+  public isStorageModified(): boolean {
+    const selectedReposFromStorage = this.storageService.readSelectedReposFromLocalStorage();
+    return !selectedReposFromStorage.every(value => this.selectedRepos.includes(value));
   }
 
   fillTopStats(): void {
@@ -125,7 +139,7 @@ export class ChartComponent implements OnInit {
       }
       this.chartData.push(repoChartDataSets);
     }
-
+    this.storeDataInLocalStorage();
     this.initFinished = true;
   }
 
@@ -143,6 +157,7 @@ export class ChartComponent implements OnInit {
 
   onSelectAllClicked(): void {
     this.selectedRepos = this.allRepos;
+    this.storageService.storeSelectedReposOnLocalStorage(this.selectedRepos);
     this.resetChart();
     this.initChart();
   }
@@ -163,15 +178,28 @@ export class ChartComponent implements OnInit {
     this.resetChart();
 
     this.topStats = new Map([...this.topStats.entries()].sort((pair1, pair2) => pair2[1] - pair1[1]));
-    this.selectedRepos = Array.from({length: +this.bestReposN}, function() {
+    this.selectedRepos = Array.from({length: +this.bestReposN}, function(): any {
       return this.next().value;
     }, this.topStats.keys());
 
+    if (this.isStorageModified() && !this.initiallyLoaded) {
+      this.selectedRepos = this.storageService.readSelectedReposFromLocalStorage();
+    }
     this.initChart();
   }
 
   isValidBestReposN(): boolean {
     return this.bestReposN && this.bestReposN >= 1 && this.bestReposN <= this.allRepos.length;
+  }
+
+  shouldShowFilterCards(): boolean {
+    return this.groupedStats && this.groupedStats.size > 0;
+  }
+
+  public restoreDefaults(): void {
+    this.bestReposN = 5;
+    this.currentMode = 'count';
+    this.filterBestNRepos();
   }
 
   private getDateListBetween(): string[] {
@@ -210,8 +238,9 @@ export class ChartComponent implements OnInit {
     };
   }
 
-  shouldShowFilterCards(): boolean {
-    return this.groupedStats && this.groupedStats.size > 0;
+  private storeDataInLocalStorage(): void {
+    this.storageService.storeModeOnLocalStorage(this.currentMode);
+    this.storageService.storeSelectedReposOnLocalStorage(this.selectedRepos);
+    this.storageService.storeTopNReposOnLocalStorage(this.bestReposN);
   }
-
 }

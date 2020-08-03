@@ -24,6 +24,7 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatCardModule} from '@angular/material/card';
+import {LocalStorageService} from './services/local-storage.service';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,7 @@ import {MatCardModule} from '@angular/material/card';
     MatSidenavModule,
     MatCardModule
   ],
-  providers: [],
+  providers: [LocalStorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

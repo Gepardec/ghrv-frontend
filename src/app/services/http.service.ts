@@ -22,10 +22,6 @@ export class HttpService {
     let queryParams = `fromDate=${fromDate.format(DATE_FORMAT)}&`;
     queryParams += `toDate=${toDate.format(DATE_FORMAT)}&`;
 
-    console.log(fromDate.format(DATE_FORMAT));
-    console.log(toDate.format(DATE_FORMAT));
-    console.log(`${environment.API_URL}/allStatsGrouped?${queryParams}`);
-
     return this.http.get<Map<string, Stat[]>>(`${environment.API_URL}/allStatsGrouped?${queryParams}`);
   }
 }
