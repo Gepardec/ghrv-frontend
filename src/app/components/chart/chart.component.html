@@ -14,17 +14,17 @@
         <img class="logo" src="assets/logo.png">
 
         <mat-card *ngIf="shouldShowFilterCards()">
-          <mat-button-toggle-group (change)="onCurrentModeChange()" [(ngModel)]="currentMode" name="view">
-            <mat-button-toggle value="count">Total views</mat-button-toggle>
-            <mat-button-toggle value="uniques">Unique views</mat-button-toggle>
+          <mat-button-toggle-group (change)="onCurrentModeChange()" [(ngModel)]="viewMode">
+            <mat-button-toggle *ngFor="let key of viewModeKeys"
+                               [value]="viewModeClassReference[key]">{{viewModeClassReference[key].displayName}}</mat-button-toggle>
           </mat-button-toggle-group>
         </mat-card>
 
         <mat-card *ngIf="shouldShowFilterCards()">
           <mat-form-field color="primary">
             <mat-label>Select GitHub repositories</mat-label>
-            <mat-select (selectionChange)="onSelectChanged($event)" [(ngModel)]="selectedRepos" [multiple]="true">
-              <mat-option *ngFor="let key of allRepos" [value]="key">{{key}}</mat-option>
+            <mat-select (selectionChange)="onSelectChanged($event)" [(ngModel)]="selectedRepoNames" [multiple]="true">
+              <mat-option *ngFor="let key of allRepoNames" [value]="key">{{key}}</mat-option>
             </mat-select>
           </mat-form-field>
 
@@ -44,13 +44,13 @@
         <mat-card *ngIf="shouldShowFilterCards()">
           <mat-form-field>
             <mat-label>Top n repos</mat-label>
-            <input [(ngModel)]="bestReposN" [max]="allRepos.length" matInput min="1">
+            <input [(ngModel)]="topNRepos" [max]="allRepoNames.length" matInput min="1">
             <mat-hint *ngIf="!isValidBestReposN()" class="text-danger">Enter a
               number
-              between 1 and {{allRepos.length}}</mat-hint>
+              between 1 and {{allRepoNames.length}}</mat-hint>
           </mat-form-field>
 
-          <span *ngIf="selectedRepos.length !== +bestReposN"
+          <span *ngIf="selectedRepoNames.length !== +topNRepos"
                 class="warning-filter">Filter is currently not applied!</span>
 
           <button (click)="filterBestNRepos()" [disabled]="!isValidBestReposN()" color="primary" mat-raised-button>
@@ -86,10 +86,10 @@
       <button (click)="drawer.toggle()" *ngIf="!drawer.opened" class="menu-button" color="primary" mat-mini-fab>
         <mat-icon>menu</mat-icon>
       </button>
-      <div *ngIf="groupedStats.size > 0; else no_data_text" class="chart-container">
+      <div *ngIf="statsMappedByRepository.size > 0; else no_data_text" class="chart-container">
         <canvas [chartType]="'line'"
                 [datasets]="chartData"
-                [labels]="chartLabels"
+                [labels]="chartLabelsXAxis"
                 [options]="chartOptions"
                 baseChart
         ></canvas>
