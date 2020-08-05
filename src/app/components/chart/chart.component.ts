@@ -1,15 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {HttpService} from '../../services/http.service';
-import {Stat} from '../../models/stat';
-import {Label} from 'ng2-charts';
-import {ChartDataSets, ChartOptions} from 'chart.js';
-import {MatSelectChange} from '@angular/material/select';
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
-import {MomentDateAdapter} from '@angular/material-moment-adapter';
+import { Component, OnInit } from '@angular/core';
+import { HttpService } from '../../services/http.service';
+import { Stat } from '../../models/stat';
+import { Label } from 'ng2-charts';
+import { ChartDataSets, ChartOptions } from 'chart.js';
+import { MatSelectChange } from '@angular/material/select';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import * as moment from 'moment';
-import {Moment} from 'moment';
-import {LocalStorageService} from '../../services/local-storage.service';
-import {ViewMode} from '../../models/view-mode';
+import { Moment } from 'moment';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { ViewMode } from '../../models/view-mode';
 
 export const DATE_FORMAT = 'YYYY-MM-DD';
 // noinspection SpellCheckingInspection
@@ -78,13 +78,16 @@ export class ChartComponent implements OnInit {
         }
 
         const itemSize = this.statsMappedByRepository.size;
+        console.log(itemSize);
         if (itemSize === 0) {
           this.initFinished = true;
           return;
         } else if (itemSize >= 1 && itemSize <= 5) {
           this.topNRepos = itemSize;
-        } else if (itemSize > 15 || !this.topNRepos) {
+        } else if (itemSize > 5 || !this.topNRepos) {
           this.topNRepos = this.storageService.readUiSettingsFromLocalStorage().topNRepos;
+        } else {
+
         }
 
         this.allRepoNames = Array.from(this.statsMappedByRepository.keys()).sort();
@@ -95,6 +98,7 @@ export class ChartComponent implements OnInit {
       },
       error => {
         console.error(error);
+        this.initFinished = true;
       }
     );
   }
@@ -153,7 +157,6 @@ export class ChartComponent implements OnInit {
   }
 
   onCurrentModeChange(): void {
-    console.log(this.viewMode);
     this.resetChart();
     this.initChartOptions();
     this.initChart();
@@ -205,6 +208,8 @@ export class ChartComponent implements OnInit {
   }
 
   public restoreDefaults(): void {
+    this.storageService.initializeLocalStorage();
+    this.initFinished = false;
     this.ngOnInit();
   }
 
@@ -245,10 +250,13 @@ export class ChartComponent implements OnInit {
   }
 
   private storeDataInLocalStorage(): void {
+    const toDate: Moment = moment().subtract(1, 'day');
     this.storageService.storeUiSettingsInLocalStorage({
       viewMode: this.viewMode,
       repositories: this.selectedRepoNames,
-      topNRepos: this.topNRepos
+      topNRepos: this.topNRepos,
+      toDate,
+      fromDate: toDate.clone().subtract(1, 'month')
     });
   }
 }

@@ -1,6 +1,8 @@
-import {Injectable} from '@angular/core';
-import {UiSettings} from '../models/ui-settings';
-import {ViewMode} from '../models/view-mode';
+import { Injectable } from '@angular/core';
+import { UiSettings } from '../models/ui-settings';
+import { ViewMode } from '../models/view-mode';
+import * as moment from 'moment';
+import { Moment } from 'moment';
 
 const STORAGE_KEY = 'ui-settings';
 const STORAGE_KEY_MODE = 'local_mode';
@@ -18,7 +20,8 @@ export class LocalStorageService {
 
   public readUiSettingsFromLocalStorage(): UiSettings {
     if (!localStorage.getItem(STORAGE_KEY)) {
-      this.storeUiSettingsInLocalStorage({viewMode: ViewMode.TOTAL, topNRepos: 5, repositories: []});
+      this.initializeLocalStorage();
+      console.log(this.readUiSettingsFromLocalStorage());
     }
     const uiSettings: UiSettings = JSON.parse(localStorage.getItem(STORAGE_KEY));
     for (const key of Object.keys(ViewMode)) {
@@ -27,5 +30,16 @@ export class LocalStorageService {
       }
     }
     return uiSettings;
+  }
+
+  public initializeLocalStorage(): void {
+    const toDate: Moment = moment().subtract(1, 'day');
+    this.storeUiSettingsInLocalStorage({
+      viewMode: ViewMode.TOTAL,
+      topNRepos: 5,
+      repositories: [],
+      toDate,
+      fromDate: toDate.clone().subtract(1, 'month')
+    });
   }
 }

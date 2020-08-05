@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {Stat} from '../models/stat';
-import {environment} from '../../environments/environment';
-import {DATE_FORMAT} from '../components/chart/chart.component';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Stat } from '../models/stat';
+import { environment } from '../../environments/environment';
+import { DATE_FORMAT } from '../components/chart/chart.component';
 import * as moment from 'moment';
-import {Moment} from 'moment';
+import { Moment } from 'moment';
 
 @Injectable({
   providedIn: 'root'
