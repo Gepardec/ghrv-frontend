@@ -90,3 +90,6 @@ button:not(.close-button):not(.menu-button) {
   flex-direction: column;
 }
 
+.warning-filter {
+  color: red;
+}

@@ -1,5 +1,5 @@
 export interface Stat {
-  count: number;
-  uniques: number;
+  totalViews: number;
+  uniqueViews: number;
   statDate: string;
 }
