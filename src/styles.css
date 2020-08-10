@@ -2,9 +2,13 @@
 
 html, body {
   height: 100%;
+  margin: 0;
 }
 
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+.sidebar * mat-card {
+  margin-bottom: 10px;
+}
+
+mat-form-field, button, mat-button-toggle-group, mat-button-toggle {
+  width: 100%;
 }

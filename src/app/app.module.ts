@@ -24,12 +24,23 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatCardModule } from '@angular/material/card';
-import { LocalStorageService } from './services/local-storage.service';
+import { StorageService } from './services/storage.service';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { ViewModeComponent } from './components/sidebar/filter/view-mode/view-mode.component';
+import { RepoSelectionComponent } from './components/sidebar/filter/repo-selection/repo-selection.component';
+import { BestReposComponent } from './components/sidebar/filter/best-repos/best-repos.component';
+import { DateSelectionComponent } from './components/sidebar/filter/date-selection/date-selection.component';
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ChartComponent
+    ChartComponent,
+    SidebarComponent,
+    ViewModeComponent,
+    RepoSelectionComponent,
+    BestReposComponent,
+    DateSelectionComponent
   ],
   imports: [
     BrowserModule,
@@ -55,9 +66,10 @@ import { LocalStorageService } from './services/local-storage.service';
     ReactiveFormsModule,
     MatMomentDateModule,
     MatSidenavModule,
-    MatCardModule
+    MatCardModule,
+    MatSliderModule
   ],
-  providers: [LocalStorageService],
+  providers: [StorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
