@@ -3,6 +3,8 @@ import { ViewMode } from '../../models/view-mode';
 import { DateSelection } from '../../models/date-selection';
 import { Moment } from 'moment';
 import { Stat } from '../../models/stat';
+import { MatDialog } from '@angular/material/dialog';
+import { HelpComponent } from './help/help.component';
 
 @Component({
   selector: 'app-sidebar',
@@ -24,7 +26,7 @@ export class SidebarComponent {
   @Output() bestCountChange = new EventEmitter<number>();
   @Output() restoreDefaultChange = new EventEmitter();
 
-  constructor() {
+  constructor(private dialog: MatDialog) {
   }
 
   onViewModeChange(viewMode: ViewMode): void {
@@ -45,5 +47,11 @@ export class SidebarComponent {
 
   onRestoreDefaultChange(): void {
     this.restoreDefaultChange.emit();
+  }
+
+  displayHelpDialog(): void {
+    this.dialog.open(HelpComponent, {
+      width: '40%'
+    });
   }
 }

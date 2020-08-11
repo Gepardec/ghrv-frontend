@@ -31,6 +31,9 @@ import { RepoSelectionComponent } from './components/sidebar/filter/repo-selecti
 import { BestReposComponent } from './components/sidebar/filter/best-repos/best-repos.component';
 import { DateSelectionComponent } from './components/sidebar/filter/date-selection/date-selection.component';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { HelpComponent } from './components/sidebar/help/help.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -40,7 +43,8 @@ import { MatSliderModule } from '@angular/material/slider';
     ViewModeComponent,
     RepoSelectionComponent,
     BestReposComponent,
-    DateSelectionComponent
+    DateSelectionComponent,
+    HelpComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +71,9 @@ import { MatSliderModule } from '@angular/material/slider';
     MatMomentDateModule,
     MatSidenavModule,
     MatCardModule,
-    MatSliderModule
+    MatSliderModule,
+    MatTooltipModule,
+    MatDialogModule
   ],
   providers: [StorageService],
   bootstrap: [AppComponent]

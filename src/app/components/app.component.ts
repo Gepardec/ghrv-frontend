@@ -63,22 +63,21 @@ export class AppComponent implements OnInit {
 
   onViewModeChange(viewMode: ViewMode): void {
     this.viewMode = viewMode;
+    this.onBestCountChange(this.bestCount);
   }
 
   onRepoSelectionChange(selectedRepos: string[]): void {
     this.selectedRepos = selectedRepos;
-    console.log(this.selectedRepos);
   }
 
   onBestCountChange(bestCount: number): void {
     this.bestCount = bestCount;
     const bestStats = [];
     for (const repo of this.allRepos) {
-      const sum = this.stats.get(repo).reduce((acc, stat) => acc + stat.totalViews, 0);
+      const sum = this.stats.get(repo).reduce((acc, stat) => acc + stat[this.viewMode.apiName], 0);
       bestStats.push({repo, sum});
     }
-    this.selectedRepos = bestStats.sort((a, b) => b.sum - a.sum).slice(0, +this.bestCount).map(s => s.repo);
-    console.log(this.selectedRepos);
+    this.selectedRepos = bestStats.sort((a, b) => b.sum - a.sum).slice(0, this.bestCount).map(s => s.repo);
   }
 
   onDateSelectionChange(dateSelection: DateSelection): void {

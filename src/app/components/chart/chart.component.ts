@@ -53,7 +53,7 @@ export class ChartComponent implements OnChanges {
     for (const repo of this.selectedRepos) {
       if (this.selectedRepos.length > 0 && this.selectedRepos.includes(repo)) {
         const repoChartDataSets: ChartDataSets = {
-          label: repo, data: [], lineTension: 0, borderWidth: 1
+          label: repo, data: [], lineTension: 0, borderWidth: 3, steppedLine: false, fill: true
         };
         for (const stat of this.stats.get(repo)) {
           (repoChartDataSets.data as any[]).push({x: stat.statDate, y: stat[this.viewMode?.apiName]});

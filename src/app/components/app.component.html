@@ -28,5 +28,7 @@
       [selectedRepos]="selectedRepos"
       [viewMode]="viewMode"
     ></app-chart>
+    <div *ngIf="selectedRepos?.length === 0 && allRepos?.length > 0">Select repos :)</div>
+    <div *ngIf="allRepos?.length === 0">No data found :(</div>
   </div>
 </div>

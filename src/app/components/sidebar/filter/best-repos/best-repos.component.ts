@@ -9,8 +9,7 @@ export class BestReposComponent {
   @Input() bestCount: number;
   @Output() change = new EventEmitter<number>();
 
-  onChange(bestCountValue: any): void {
-    console.log(bestCountValue);
-    this.change.emit(+bestCountValue);
+  onChange(): void {
+    this.change.emit(this.bestCount);
   }
 }

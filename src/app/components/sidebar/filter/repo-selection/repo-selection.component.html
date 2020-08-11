@@ -1,6 +1,6 @@
 <mat-card>
   <mat-form-field color="primary">
-    <mat-label>Select GitHub repositories</mat-label>
+    <mat-label>Select GitHub repos [ {{selectedRepos.length + ' / ' + allRepos.length}} ]</mat-label>
     <mat-select
       (selectionChange)="onChange($event.value)"
       [(ngModel)]="selectedRepos"

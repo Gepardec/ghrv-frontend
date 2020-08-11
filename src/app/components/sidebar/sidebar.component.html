@@ -14,19 +14,18 @@
     (change)="onViewModeChange($event)">
   </app-view-mode>
 
+  <app-date-selection
+    (change)="onDateSelectionChange($event)"
+    [fromDate]="fromDate"
+    [toDate]="toDate">
+  </app-date-selection>
+
   <app-repo-selection
     *ngIf="allRepos && allRepos.length > 0"
     [allRepos]="allRepos"
     [selectedRepos]="selectedRepos"
     (change)="onRepoSelectionChange($event)">
   </app-repo-selection>
-
-
-  <app-date-selection
-    [fromDate]="fromDate"
-    [toDate]="toDate"
-    (change)="onDateSelectionChange($event)">
-  </app-date-selection>
 
   <mat-card>
     <button
@@ -36,4 +35,13 @@
       Restore defaults
     </button>
   </mat-card>
+
+  <button
+    (click)="displayHelpDialog()"
+    class="help"
+    color="primary"
+    mat-icon-button
+    matTooltip="Click for help">
+    <mat-icon color="primary">help</mat-icon>
+  </button>
 </div>
