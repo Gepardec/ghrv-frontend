@@ -1,0 +1,27 @@
+<mat-card>
+  <mat-form-field color="primary">
+    <mat-label>Select GitHub repos [ {{selectedRepos.length + ' / ' + allRepos.length}} ]</mat-label>
+    <mat-select
+      (selectionChange)="onChange($event.value)"
+      [(ngModel)]="selectedRepos"
+      [multiple]="true">
+      <mat-option *ngFor="let repo of allRepos" [value]="repo">{{repo}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button
+    [disabled]="allRepos?.length === selectedRepos?.length"
+    (click)="onChange(allRepos)"
+    color="primary"
+    mat-raised-button>
+    Select all
+  </button>
+
+  <button
+    [disabled]="selectedRepos?.length === 0"
+    (click)="onChange([])"
+    color="primary"
+    mat-raised-button>
+    Deselect all
+  </button>
+</mat-card>

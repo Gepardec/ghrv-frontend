@@ -1,1 +1,34 @@
-<app-chart></app-chart>
+<div *ngIf="!(communicationService.sidebarInitialized | async)" class="spinner">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div *ngIf="(communicationService.sidebarInitialized | async)" class="container">
+  <div class="sidebar">
+    <app-sidebar
+      [stats]="stats"
+      [viewMode]="viewMode"
+      [toDate]="toDate"
+      [fromDate]="fromDate"
+      [allRepos]="allRepos"
+      [selectedRepos]="selectedRepos"
+      [bestCount]="bestCount"
+
+      (viewModeChange)="onViewModeChange($event)"
+      (dateSelectionChange)="onDateSelectionChange($event)"
+      (repoSelectionChange)="onRepoSelectionChange($event)"
+      (bestCountChange)="onBestCountChange($event)"
+      (restoreDefaultChange)="onRestoreDefaultChange()"
+    ></app-sidebar>
+  </div>
+  <div class="chart">
+    <app-chart
+      [fromDate]="fromDate"
+      [toDate]="toDate"
+      [stats]="stats"
+      [selectedRepos]="selectedRepos"
+      [viewMode]="viewMode"
+    ></app-chart>
+    <div *ngIf="selectedRepos?.length === 0 && allRepos?.length > 0">Select repos :)</div>
+    <div *ngIf="allRepos?.length === 0">No data found :(</div>
+  </div>
+</div>

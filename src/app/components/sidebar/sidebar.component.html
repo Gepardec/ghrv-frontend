@@ -1,0 +1,47 @@
+<div class="sidebar">
+
+  <img src="assets/logo.png">
+
+  <app-best-repos
+    *ngIf="allRepos && allRepos.length > 0"
+    [bestCount]="bestCount"
+    (change)="onBestReposChange($event)">
+  </app-best-repos>
+
+  <app-view-mode
+    *ngIf="allRepos && allRepos.length > 0"
+    [viewMode]="viewMode"
+    (change)="onViewModeChange($event)">
+  </app-view-mode>
+
+  <app-date-selection
+    (change)="onDateSelectionChange($event)"
+    [fromDate]="fromDate"
+    [toDate]="toDate">
+  </app-date-selection>
+
+  <app-repo-selection
+    *ngIf="allRepos && allRepos.length > 0"
+    [allRepos]="allRepos"
+    [selectedRepos]="selectedRepos"
+    (change)="onRepoSelectionChange($event)">
+  </app-repo-selection>
+
+  <mat-card>
+    <button
+      (click)="onRestoreDefaultChange()"
+      color="primary"
+      mat-raised-button>
+      Restore defaults
+    </button>
+  </mat-card>
+
+  <button
+    (click)="displayHelpDialog()"
+    class="help"
+    color="primary"
+    mat-icon-button
+    matTooltip="Click for help">
+    <mat-icon color="primary">help</mat-icon>
+  </button>
+</div>

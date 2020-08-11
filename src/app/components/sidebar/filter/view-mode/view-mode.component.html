@@ -1,0 +1,12 @@
+<mat-card>
+  <mat-card-title>View mode</mat-card-title>
+  <mat-button-toggle-group
+    (change)="onChange()"
+    [(ngModel)]="viewMode">
+    <mat-button-toggle
+      *ngFor="let key of viewModeKeys"
+      [value]="viewModeReference[key]">
+      {{viewModeReference[key].displayName}}
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+</mat-card>
