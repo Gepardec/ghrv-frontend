@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UiSettings } from '../models/ui-settings';
 import { ViewMode } from '../models/view-mode';
-import * as moment from 'moment';
-import { DATE_FORMAT } from '../globals';
 
 @Injectable({
   providedIn: 'root'
@@ -36,9 +34,7 @@ export class StorageService {
   private initLocalStorage(): void {
     this.storeUiSettings({
       viewMode: ViewMode.TOTAL,
-      bestCount: 5,
-      toDate: moment().subtract(1, 'day').format(DATE_FORMAT),
-      fromDate: moment().subtract(1, 'month').format(DATE_FORMAT)
+      bestCount: 5
     });
   }
 }
