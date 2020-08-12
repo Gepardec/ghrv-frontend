@@ -1,10 +1,10 @@
 img {
-  margin-bottom: 15px;
+  margin: 15px 0;
   width: 80%;
 }
 
 .help {
   position: absolute;
-  top: 2px;
-  right: 2px;
+  bottom: 10px;
+  left: 10px;
 }

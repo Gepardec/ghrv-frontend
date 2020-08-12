@@ -6,7 +6,6 @@ import { Moment } from 'moment';
 import { HttpService } from '../services/http.service';
 import { StorageService } from '../services/storage.service';
 import { ChartSidebarCommunicationService } from '../services/chart-sidebar-communication.service';
-import { DATE_FORMAT } from '../globals';
 import { DateSelection } from '../models/date-selection';
 
 @Component({
@@ -33,8 +32,8 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     const uiSettings = this.storageService.readUiSettings();
 
-    this.fromDate = moment(uiSettings.fromDate);
-    this.toDate = moment(uiSettings.toDate);
+    this.fromDate = moment().subtract(1, 'month');
+    this.toDate = moment().subtract(1, 'day');
     this.viewMode = uiSettings.viewMode;
     this.bestCount = uiSettings.bestCount;
 
@@ -95,9 +94,7 @@ export class AppComponent implements OnInit {
   private storeUiSettings($event: Event): void {
     this.storageService.storeUiSettings({
       viewMode: this.viewMode,
-      bestCount: this.bestCount,
-      fromDate: this.fromDate.format(DATE_FORMAT),
-      toDate: this.toDate.format(DATE_FORMAT),
+      bestCount: this.bestCount
     });
   }
 }
