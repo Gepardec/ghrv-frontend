@@ -12,6 +12,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 @NgModule({
   exports: [
@@ -28,6 +29,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatProgressSpinnerModule,
     MatSelectModule,
     MatTooltipModule,
+    NgxMatSelectSearchModule
   ],
   imports: [
     MatButtonModule,
@@ -43,6 +45,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatProgressSpinnerModule,
     MatSelectModule,
     MatTooltipModule,
+    NgxMatSelectSearchModule
   ]
 })
 export class MaterialModule {

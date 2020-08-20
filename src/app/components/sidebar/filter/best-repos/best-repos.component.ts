@@ -6,6 +6,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./best-repos.component.css']
 })
 export class BestReposComponent {
+  @Input() allRepos: string[];
   @Input() bestCount: number;
   @Output() change = new EventEmitter<number>();
 

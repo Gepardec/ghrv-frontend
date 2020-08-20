@@ -50,8 +50,7 @@ export class AppComponent implements OnInit {
           this.stats.set(key, data[key]);
         }
         this.allRepos = Array.from(this.stats.keys());
-        this.onBestCountChange(this.bestCount);
-
+        this.storeBestCountRepos(this.bestCount);
         this.communicationService.sidebarInitialized.emit(true);
       },
       error => {
@@ -62,7 +61,6 @@ export class AppComponent implements OnInit {
 
   onViewModeChange(viewMode: ViewMode): void {
     this.viewMode = viewMode;
-    this.onBestCountChange(this.bestCount);
   }
 
   onRepoSelectionChange(selectedRepos: string[]): void {
@@ -71,12 +69,7 @@ export class AppComponent implements OnInit {
 
   onBestCountChange(bestCount: number): void {
     this.bestCount = bestCount;
-    const bestStats = [];
-    for (const repo of this.allRepos) {
-      const sum = this.stats.get(repo).reduce((acc, stat) => acc + stat[this.viewMode.apiName], 0);
-      bestStats.push({repo, sum});
-    }
-    this.selectedRepos = bestStats.sort((a, b) => b.sum - a.sum).slice(0, this.bestCount).map(s => s.repo);
+    this.storeBestCountRepos(this.bestCount);
   }
 
   onDateSelectionChange(dateSelection: DateSelection): void {
@@ -88,6 +81,15 @@ export class AppComponent implements OnInit {
   onRestoreDefaultChange(): void {
     this.storageService.removeUiSettings();
     this.ngOnInit();
+  }
+
+  private storeBestCountRepos(bestCount: number): void {
+    const bestStats = [];
+    for (const repo of this.allRepos) {
+      const sum = this.stats.get(repo).reduce((acc, stat) => acc + stat[this.viewMode.apiName], 0);
+      bestStats.push({repo, sum});
+    }
+    this.selectedRepos = bestStats.sort((a, b) => b.sum - a.sum).slice(0, bestCount).map(s => s.repo);
   }
 
   @HostListener('window:beforeunload', ['$event'])

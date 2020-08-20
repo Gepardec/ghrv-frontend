@@ -35,7 +35,7 @@ export class ChartComponent implements OnChanges {
     this.chartLabelsXAxis = dates;
 
     for (const repo of this.stats.keys()) {
-      if (this.selectedRepos.length > 0 && this.selectedRepos.includes(repo)) {
+      if (this.selectedRepos.includes(repo)) {
         const statArr: Stat[] = this.stats.get(repo);
         for (const date of dates) {
           if (!statArr.map(stat => stat.statDate).includes(date)) {
@@ -51,7 +51,7 @@ export class ChartComponent implements OnChanges {
     }
 
     for (const repo of this.selectedRepos) {
-      if (this.selectedRepos.length > 0 && this.selectedRepos.includes(repo)) {
+      if (this.selectedRepos.includes(repo)) {
         const repoChartDataSets: ChartDataSets = {
           label: repo, data: [], lineTension: 0, borderWidth: 3, steppedLine: false, fill: true
         };
@@ -82,6 +82,9 @@ export class ChartComponent implements OnChanges {
     this.chartOptions = {
       maintainAspectRatio: false,
       responsive: true,
+      animation: {
+        duration: 0
+      },
       scales: {
         xAxes: [{
           scaleLabel: {
