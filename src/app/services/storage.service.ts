@@ -20,7 +20,6 @@ export class StorageService {
   public readUiSettings(): UiSettings {
     if (!localStorage.getItem(StorageService.STORAGE_KEY)) {
       this.initLocalStorage();
-      console.log(this.readUiSettings());
     }
     const uiSettings: UiSettings = JSON.parse(localStorage.getItem(StorageService.STORAGE_KEY));
     for (const key of Object.keys(ViewMode)) {
