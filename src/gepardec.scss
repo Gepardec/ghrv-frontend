@@ -35,19 +35,23 @@ $gepardec-pal: (
   )
 );
 
-$my-app-primary: mat-palette($gepardec-pal);
-$my-app-accent: mat-palette($gepardec-pal, A200, A100, A400);
-$my-app-theme: mat-light-theme($my-app-primary, $my-app-accent);
+$ghrv-primary: mat-palette($gepardec-pal);
+$ghrv-accent: mat-palette($gepardec-pal, A200, A100, A400);
+$ghrv-theme: mat-light-theme($ghrv-primary, $ghrv-accent);
 
 @mixin mix-app-theme($my-app-theme) {
-  $primary: $my-app-primary;
-  $accent: $my-app-accent;
+  $primary: $ghrv-primary;
+  $accent: $ghrv-accent;
 
   .mat-button-toggle-checked {
     background-color: mat-color($primary);
     color: mat-color($primary, default-contrast);
   }
+
+  .mat-select-panel {
+    max-height: 50vh !important;
+  }
 }
 
-@include angular-material-theme($my-app-theme);
-@include mix-app-theme($my-app-theme);
+@include angular-material-theme($ghrv-theme);
+@include mix-app-theme($ghrv-theme);

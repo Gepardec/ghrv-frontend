@@ -1,25 +1,34 @@
 <mat-card>
   <mat-form-field color="primary">
-    <mat-label>Select GitHub repos [ {{selectedRepos.length + ' / ' + allRepos.length}} ]</mat-label>
+    <mat-label>Selected repos [ {{selectedRepos.length + ' / ' + allRepos.length}} ]</mat-label>
     <mat-select
-      (selectionChange)="onChange($event.value)"
+      #select
+      (selectionChange)="onSelectionChange($event.value)"
       [(ngModel)]="selectedRepos"
       [multiple]="true">
-      <mat-option *ngFor="let repo of allRepos" [value]="repo">{{repo}}</mat-option>
+      <mat-option>
+        <ngx-mat-select-search
+          (ngModelChange)="onSearch($event)"
+          [noEntriesFoundLabel]="'No entries found'"
+          [placeholderLabel]="'Type here to search'"
+          ngModel
+        ></ngx-mat-select-search>
+      </mat-option>
+      <mat-option *ngFor="let repo of filteredRepos" [value]="repo">{{repo}}</mat-option>
     </mat-select>
   </mat-form-field>
 
   <button
-    [disabled]="allRepos?.length === selectedRepos?.length"
-    (click)="onChange(allRepos)"
+    (click)="selection('selectAll')"
+    [disabled]="allRepos?.length === selectedRepos.length"
     color="primary"
     mat-raised-button>
     Select all
   </button>
 
   <button
-    [disabled]="selectedRepos?.length === 0"
-    (click)="onChange([])"
+    (click)="selection('deselectAll')"
+    [disabled]="selectedRepos.length === 0"
     color="primary"
     mat-raised-button>
     Deselect all

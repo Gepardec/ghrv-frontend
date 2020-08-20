@@ -5,6 +5,7 @@
   <app-best-repos
     *ngIf="allRepos && allRepos.length > 0"
     [bestCount]="bestCount"
+    [allRepos]="allRepos"
     (change)="onBestReposChange($event)">
   </app-best-repos>
 
