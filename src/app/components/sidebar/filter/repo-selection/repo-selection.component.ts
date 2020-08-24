@@ -14,6 +14,7 @@ export class RepoSelectionComponent implements OnInit {
   filteredRepos: string[];
 
   ngOnInit(): void {
+    this.allRepos = this.allRepos.sort((a, b) => a.localeCompare(b));
     this.filteredRepos = this.allRepos;
   }
 
@@ -22,7 +23,9 @@ export class RepoSelectionComponent implements OnInit {
       this.filteredRepos = this.allRepos;
       return;
     }
-    this.filteredRepos = this.allRepos.filter(repo => repo.toLowerCase().includes(searchString.toLowerCase().trim()));
+    this.filteredRepos = this.allRepos
+      .filter(repo => repo.toLowerCase().includes(searchString.toLowerCase().trim()))
+      .sort((a, b) => a.localeCompare(b));
   }
 
   onSelectionChange(values: string[]): void {

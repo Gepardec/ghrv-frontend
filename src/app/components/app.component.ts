@@ -32,8 +32,8 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     const uiSettings = this.storageService.readUiSettings();
 
-    this.fromDate = moment().subtract(1, 'month');
     this.toDate = moment().subtract(1, 'day');
+    this.fromDate = this.toDate.clone().subtract(1, 'month');
     this.viewMode = uiSettings.viewMode;
     this.bestCount = uiSettings.bestCount;
 
@@ -49,7 +49,7 @@ export class AppComponent implements OnInit {
         for (const key of Object.keys(data)) {
           this.stats.set(key, data[key]);
         }
-        this.allRepos = Array.from(this.stats.keys());
+        this.allRepos = Array.from(this.stats.keys()).sort((a, b) => a.localeCompare(b));
         this.storeBestCountRepos(this.bestCount);
         this.communicationService.sidebarInitialized.emit(true);
       },

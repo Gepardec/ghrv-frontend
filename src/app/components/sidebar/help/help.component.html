@@ -13,14 +13,8 @@
   </ul>
 
   <h3>Sidebar</h3>
-  <p>Here you can set preferences like date range, repos to display, best repos (by total/unique views), et al.</p>
-  <p>Note the following:</p>
-  <ul>
-    <li>The value inside best repos will always override the repo selection when refreshing the page.</li>
-    <li>The definition of "best" is calculated via the current view mode. If you select total views then the best n
-      repos with the highest total views are displayed. For unique views this works vice versa.
-    </li>
-  </ul>
+  <p>Here you can set preferences like date range, repos to display, view mode (by total/unique views), number of best
+    repos, et al.</p>
 
   <h3>Chart</h3>
   <p>This part displays the data corresponding to the preferences in the sidebar. You can select or deselect the repos
@@ -29,7 +23,7 @@
   <h1>Caching</h1>
   <p>You may have noticed that this application caches some of your preferences set in the sidebar. View
     mode and best n are saved so you don't have to set them at every page refresh.</p>
-  <p>Note that date range is not cached, because we want to default yesterday until one month before as range.</p>
+  <p>Note that date range is not cached.</p>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">

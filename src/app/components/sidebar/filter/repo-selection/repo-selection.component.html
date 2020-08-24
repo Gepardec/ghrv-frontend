@@ -8,10 +8,10 @@
       [multiple]="true">
       <mat-option>
         <ngx-mat-select-search
+          ngModel
           (ngModelChange)="onSearch($event)"
           [noEntriesFoundLabel]="'No entries found'"
           [placeholderLabel]="'Type here to search'"
-          ngModel
         ></ngx-mat-select-search>
       </mat-option>
       <mat-option *ngFor="let repo of filteredRepos" [value]="repo">{{repo}}</mat-option>
