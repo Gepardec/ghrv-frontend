@@ -1,0 +1,33 @@
+{
+  "language": {
+    "en": "Englisch",
+    "de": "Deutsch"
+  },
+  "best-repos": {
+    "label": "Anzahl der besten anzuzeigenden Repos",
+    "displayBtn": "Anzeigen"
+  },
+  "date-selection": {
+    "label": "Datumsbereich auswählen",
+    "loadViewData": "Daten laden"
+  },
+  "repo-selection": {
+    "selectedRepos": "Ausgewählte Repos",
+    "noEntriesFoundLabel": "Keine Repos gefunden",
+    "placeholderLabel": "Hier tippen, um nach Repos zu suchen",
+    "selectAll": "Alle auswählen",
+    "deselectAll": "Alle abwählen"
+  },
+  "view-mode": {
+    "TOTAL": "Gesamtaufrufe",
+    "UNIQUE": "Individuelle Aufrufe",
+    "viewMode": "Anzeigemodus"
+  },
+  "app": {
+    "selectRepos": "Bitte Repos auswählen",
+    "noDataFound": "Keine Daten gefunden"
+  },
+  "sidebar": {
+    "restoreDefaults": "Standard wiederherstellen"
+  }
+}
