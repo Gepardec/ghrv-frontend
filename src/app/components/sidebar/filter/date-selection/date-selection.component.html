@@ -1,6 +1,6 @@
 <mat-card>
   <mat-form-field>
-    <mat-label>Enter a date range</mat-label>
+    <mat-label>{{'date-selection.label' | translate}}</mat-label>
     <mat-date-range-input [max]="MAX_DATE" [min]="MIN_DATE" [rangePicker]="picker">
       <input [(ngModel)]="fromDate" matStartDate placeholder="From date" readonly>
       <input [(ngModel)]="toDate" matEndDate placeholder="To date" readonly>
@@ -13,6 +13,6 @@
           *ngIf="toDate && fromDate"
           color="primary"
           mat-raised-button>
-    Load view data
+    {{'date-selection.loadViewData' | translate}}
   </button>
 </mat-card>

@@ -26,7 +26,8 @@ export class AppComponent implements OnInit {
   constructor(
     private httpService: HttpService,
     private storageService: StorageService,
-    public communicationService: ChartSidebarCommunicationService) {
+    public communicationService: ChartSidebarCommunicationService
+  ) {
   }
 
   ngOnInit(): void {
@@ -86,7 +87,7 @@ export class AppComponent implements OnInit {
   private storeBestCountRepos(bestCount: number): void {
     const bestStats = [];
     for (const repo of this.allRepos) {
-      const sum = this.stats.get(repo).reduce((acc, stat) => acc + stat[this.viewMode.apiName], 0);
+      const sum = this.stats.get(repo).reduce((acc, stat) => acc + stat[this.viewMode], 0);
       bestStats.push({repo, sum});
     }
     this.selectedRepos = bestStats.sort((a, b) => b.sum - a.sum).slice(0, bestCount).map(s => s.repo);

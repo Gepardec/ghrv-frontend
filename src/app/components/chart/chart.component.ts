@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { Stat } from '../../models/stat';
 import { Label } from 'ng2-charts';
 import { ChartDataSets, ChartOptions } from 'chart.js';
@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { Moment } from 'moment';
 import { ViewMode } from '../../models/view-mode';
 import { DATE_FORMAT } from '../../globals';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-chart',
@@ -13,7 +14,7 @@ import { DATE_FORMAT } from '../../globals';
   styleUrls: ['./chart.component.css']
 })
 
-export class ChartComponent implements OnChanges {
+export class ChartComponent implements OnChanges, OnInit {
   @Input() stats: Map<string, Stat[]>;
   @Input() selectedRepos: string[];
   @Input() toDate: Moment;
@@ -24,21 +25,29 @@ export class ChartComponent implements OnChanges {
   chartDataSets: ChartDataSets[] = [];
   chartOptions: ChartOptions;
 
-  ngOnChanges(): void {
+  constructor(private translateService: TranslateService) {
+  }
+
+  ngOnInit(): void {
+    this.translateService.onLangChange.subscribe(async () => await this.initChartOptions());
+  }
+
+  async ngOnChanges(): Promise<void> {
     this.resetChart();
-    this.initChartOptions();
+    await this.initChartOptions();
     this.initChart();
   }
 
-  initChart(): void {
+  private initChart(): void {
     const dates = this.getDateListBetween();
     this.chartLabelsXAxis = dates;
 
     for (const repo of this.stats.keys()) {
       if (this.selectedRepos.includes(repo)) {
-        const statArr: Stat[] = this.stats.get(repo);
+        const statArr = this.stats.get(repo);
+        const statArrDates = statArr.map(stat => stat.statDate);
         for (const date of dates) {
-          if (!statArr.map(stat => stat.statDate).includes(date)) {
+          if (!statArrDates.includes(date)) {
             statArr.push({totalViews: 0, statDate: date, uniqueViews: 0});
           }
         }
@@ -51,19 +60,17 @@ export class ChartComponent implements OnChanges {
     }
 
     for (const repo of this.selectedRepos) {
-      if (this.selectedRepos.includes(repo)) {
-        const repoChartDataSets: ChartDataSets = {
-          label: repo, data: [], lineTension: 0, borderWidth: 3, steppedLine: false, fill: true
-        };
-        for (const stat of this.stats.get(repo)) {
-          (repoChartDataSets.data as any[]).push({x: stat.statDate, y: stat[this.viewMode?.apiName]});
-        }
-        this.chartDataSets.push(repoChartDataSets);
+      const repoChartDataSets: ChartDataSets = {
+        label: repo, data: [], lineTension: 0, borderWidth: 3, steppedLine: false, fill: true
+      };
+      for (const stat of this.stats.get(repo)) {
+        (repoChartDataSets.data as any[]).push({x: stat.statDate, y: stat[this.viewMode]});
       }
+      this.chartDataSets.push(repoChartDataSets);
     }
   }
 
-  resetChart(): void {
+  private resetChart(): void {
     this.chartDataSets = [];
     this.chartLabelsXAxis = [];
   }
@@ -78,7 +85,7 @@ export class ChartComponent implements OnChanges {
     return dates;
   }
 
-  private initChartOptions(): void {
+  private async initChartOptions(): Promise<void> {
     this.chartOptions = {
       maintainAspectRatio: false,
       responsive: true,
@@ -95,14 +102,16 @@ export class ChartComponent implements OnChanges {
           time: {
             unit: 'day',
             displayFormats: {
-              day: 'YYYY-MM-DD'
+              day: DATE_FORMAT
             }
           }
         }],
         yAxes: [{
           scaleLabel: {
             display: true,
-            labelString: (this.viewMode === ViewMode.TOTAL ? 'Total' : 'Unique') + ' views'
+            labelString: await this.translateService
+              .get('view-mode.' + Object.keys(ViewMode)[Object.values(ViewMode).indexOf(this.viewMode)])
+              .toPromise()
           },
           ticks: {
             beginAtZero: true

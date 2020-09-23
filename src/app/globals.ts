@@ -1,5 +1,7 @@
 export const API_URL = 'https://cvmg56nuqf.execute-api.us-east-2.amazonaws.com/prod';
 export const DATE_FORMAT = 'YYYY-MM-DD';
+export const LANGS = ['de', 'en'];
+export const DEFAULT_LANG = LANGS[0];
 export const DATE_PICKER_CONFIG = {
   parse: {
     dateInput: 'input',
