@@ -8,3 +8,7 @@ img {
   bottom: 10px;
   left: 10px;
 }
+
+.language-container {
+  float: right;
+}

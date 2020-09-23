@@ -1,6 +1,6 @@
 <mat-card>
   <mat-form-field color="primary">
-    <mat-label>Display best {{bestCount}}</mat-label>
+    <mat-label>{{'best-repos.label' | translate }}</mat-label>
     <mat-select
       [(value)]="bestCount">
       <mat-option
@@ -9,5 +9,5 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <button (click)="onChange()" color="primary" mat-raised-button>Display</button>
+  <button (click)="onChange()" color="primary" mat-raised-button>{{'best-repos.displayBtn' | translate}}</button>
 </mat-card>

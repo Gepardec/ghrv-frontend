@@ -1,4 +1,6 @@
 .mat-card-title {
   font-size: 12px;
   text-align: left;
+  font-weight: normal;
+  color: #7e7e7e;
 }

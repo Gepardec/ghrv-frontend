@@ -1,6 +1,8 @@
 <mat-card>
   <mat-form-field color="primary">
-    <mat-label>Selected repos [ {{selectedRepos.length + ' / ' + allRepos.length}} ]</mat-label>
+    <mat-label>
+      {{'repo-selection.selectedRepos' | translate}} [ {{selectedRepos.length + ' / ' + allRepos.length}}]
+    </mat-label>
     <mat-select
       #select
       (selectionChange)="onSelectionChange($event.value)"
@@ -10,8 +12,8 @@
         <ngx-mat-select-search
           ngModel
           (ngModelChange)="onSearch($event)"
-          [noEntriesFoundLabel]="'No entries found'"
-          [placeholderLabel]="'Type here to search'"
+          [noEntriesFoundLabel]="'repo-selection.noEntriesFoundLabel'|translate"
+          [placeholderLabel]="'repo-selection.placeholderLabel'|translate"
         ></ngx-mat-select-search>
       </mat-option>
       <mat-option *ngFor="let repo of filteredRepos" [value]="repo">{{repo}}</mat-option>
@@ -23,7 +25,7 @@
     [disabled]="allRepos?.length === selectedRepos.length"
     color="primary"
     mat-raised-button>
-    Select all
+    {{'repo-selection.selectAll' | translate}}
   </button>
 
   <button
@@ -31,6 +33,6 @@
     [disabled]="selectedRepos.length === 0"
     color="primary"
     mat-raised-button>
-    Deselect all
+    {{'repo-selection.deselectAll' | translate}}
   </button>
 </mat-card>

@@ -10,8 +10,8 @@ export class ViewModeComponent {
   @Input() viewMode: ViewMode;
   @Output() change = new EventEmitter<ViewMode>();
 
-  viewModeReference = ViewMode;
-  viewModeKeys: string[] = Object.keys(this.viewModeReference);
+  ViewMode = ViewMode;
+  viewModeKeys: string[] = Object.keys(this.ViewMode);
 
   onChange(): void {
     this.change.emit(this.viewMode);

@@ -1,6 +1,8 @@
 <div class="sidebar">
-
   <img src="assets/logo.png">
+  <div class="language-container">
+    <app-language></app-language>
+  </div>
 
   <app-best-repos
     *ngIf="allRepos && allRepos.length > 0"
@@ -33,16 +35,7 @@
       (click)="onRestoreDefaultChange()"
       color="primary"
       mat-raised-button>
-      Restore defaults
+      {{'sidebar.restoreDefaults' | translate}}
     </button>
   </mat-card>
-
-  <button
-    (click)="displayHelpDialog()"
-    class="help"
-    color="primary"
-    mat-icon-button
-    matTooltip="Click for help">
-    <mat-icon color="primary">help</mat-icon>
-  </button>
 </div>

@@ -13,13 +13,18 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   exports: [
     MatButtonModule,
     MatButtonToggleModule,
     MatCardModule,
+    MatListModule,
     MatNativeDateModule,
+    MatMenuModule,
     MatMomentDateModule,
     MatDatepickerModule,
     MatDialogModule,
@@ -27,6 +32,7 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     MatIconModule,
     MatInputModule,
     MatProgressSpinnerModule,
+    MatRadioModule,
     MatSelectModule,
     MatTooltipModule,
     NgxMatSelectSearchModule
@@ -35,7 +41,9 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     MatButtonModule,
     MatButtonToggleModule,
     MatCardModule,
+    MatListModule,
     MatNativeDateModule,
+    MatMenuModule,
     MatMomentDateModule,
     MatDatepickerModule,
     MatDialogModule,
@@ -43,6 +51,7 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     MatIconModule,
     MatInputModule,
     MatProgressSpinnerModule,
+    MatRadioModule,
     MatSelectModule,
     MatTooltipModule,
     NgxMatSelectSearchModule

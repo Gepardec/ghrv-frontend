@@ -1,0 +1,14 @@
+<button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+  <mat-icon color="primary">translate</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+  <mat-list-item *ngFor="let lang of translateService.getLangs()">
+    <mat-radio-button
+      class="mat-menu-item"
+      color="primary"
+      (click)="translateService.use(lang)"
+      [checked]="lang === translateService.currentLang">
+      {{'language.' + lang | translate}}
+    </mat-radio-button>
+  </mat-list-item>
+</mat-menu>

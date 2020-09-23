@@ -1,0 +1,33 @@
+{
+  "language": {
+    "en": "English",
+    "de": "German"
+  },
+  "best-repos": {
+    "label": "Count of best repos to display",
+    "displayBtn": "Display"
+  },
+  "date-selection": {
+    "label": "Enter a date range",
+    "loadViewData": "Load view data"
+  },
+  "repo-selection": {
+    "selectedRepos": "Selected repos",
+    "noEntriesFoundLabel": "No repos found",
+    "placeholderLabel": "Type here to search for repos",
+    "selectAll": "Select all",
+    "deselectAll": "Deselect all"
+  },
+  "view-mode": {
+    "TOTAL": "Total views",
+    "UNIQUE": "Unique views",
+    "viewMode": "View mode"
+  },
+  "app": {
+    "selectRepos": "Select repos",
+    "noDataFound": "No data found"
+  },
+  "sidebar": {
+    "restoreDefaults": "Restore defaults"
+  }
+}
